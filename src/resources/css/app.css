@@ -2,13 +2,14 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-/* Livewire Modal Styles */
+/* Modal utilities */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -20,27 +21,9 @@
     padding: 1rem;
 }
 .modal {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    width: 100%;
-    max-width: 480px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    max-height: 90vh;
-    overflow-y: auto;
+    @apply bg-white rounded-xl p-6 w-full max-w-md shadow-xl max-h-[90vh] overflow-y-auto;
 }
-.modal h3 { margin-bottom: 1rem; }
-.btn-sm { padding: .35rem .7rem; font-size: .78rem; }
-
-/* Merge modal (wider) */
-#merge-modal .modal {
-    max-width: 420px;
-}
-
-/* Status switch form */
+.modal h3 { @apply mb-4; }
 .status-switch form {
-    display: inline-flex;
-    gap: .5rem;
-    align-items: center;
-    margin-left: .8rem;
+    @apply inline-flex gap-2 items-center ml-2;
 }

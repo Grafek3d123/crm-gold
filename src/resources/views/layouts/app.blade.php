@@ -7,28 +7,28 @@
     @vite('resources/css/app.css')
     @livewireStyles
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen">
 @auth
-<header>
-    <h1>CRM — Золото Петербурга</h1>
-    <nav>
-        <a href="{{ route('dashboard') }}">Дашборд</a>
-        <a href="{{ route('inquiries.index') }}">Обращения</a>
-        <a href="{{ route('customers.index') }}">Клиенты</a>
-        <a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Выход</a>
+<header class="bg-gray-900 text-white px-6 py-4 flex justify-between items-center">
+    <h1 class="text-lg font-semibold">CRM — Золото Петербурга</h1>
+    <nav class="flex gap-4">
+        <a href="{{ route('dashboard') }}" class="text-sm hover:underline">Дашборд</a>
+        <a href="{{ route('inquiries.index') }}" class="text-sm hover:underline">Обращения</a>
+        <a href="{{ route('customers.index') }}" class="text-sm hover:underline">Клиенты</a>
+        <a href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="text-sm hover:underline">Выход</a>
     </nav>
 </header>
 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">@csrf</form>
 @endauth
 
-<div class="container">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     @if (session('status'))
-        <div class="alert alert-success">{{ session('status') }}</div>
+        <div class="mb-4 p-3 rounded-lg bg-green-50 text-green-700 text-sm">{{ session('status') }}</div>
     @endif
 
     @if ($errors->any())
-        <div class="alert alert-error">
-            <ul>
+        <div class="mb-4 p-3 rounded-lg bg-red-50 text-red-700 text-sm">
+            <ul class="list-disc pl-5">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -39,7 +39,7 @@
     @yield('content')
 </div>
 
-<footer>CRM · Laravel 13 · PostgreSQL</footer>
+<footer class="text-center py-6 text-gray-400 text-xs">CRM · Laravel 13 · PostgreSQL</footer>
 
 @livewireScripts
 @vite('resources/js/app.js')
