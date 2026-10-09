@@ -1,1 +1,5 @@
 tasks/
+.DS_Store
+server.md
+AGENTS.md
+README.md
