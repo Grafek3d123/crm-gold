@@ -3,9 +3,11 @@
 @section('title', 'Обращения — CRM')
 
 @section('content')
+    <livewire:inquiry-create-modal />
+
     <div class="row" style="justify-content: space-between; margin-bottom: 1rem;">
         <h1 style="font-size: 1.3rem;">Обращения</h1>
-        <a class="btn" href="{{ route('inquiries.create') }}">Зарегистрировать обращение</a>
+        <button class="btn" wire:click="$dispatch('open-inquiry-create-modal')">Зарегистрировать обращение</button>
     </div>
 
     <div class="card">

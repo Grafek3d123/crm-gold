@@ -31,7 +31,7 @@ class AuthController extends Controller
         if (RateLimiter::tooManyAttempts($key, 5)) {
             throw ValidationException::withMessages([
                 'email' => 'Слишком много попыток входа. Попробуйте позже.',
-            ]);
+            ])->redirectTo(route('login'));
         }
 
         $user = User::query()->where('email', $credentials['email'])->first();
@@ -41,7 +41,7 @@ class AuthController extends Controller
 
             throw ValidationException::withMessages([
                 'email' => 'Неверные учётные данные.',
-            ]);
+            ])->redirectTo(route('login'));
         }
 
         if (! $user->is_active) {
@@ -49,7 +49,7 @@ class AuthController extends Controller
 
             throw ValidationException::withMessages([
                 'email' => 'Учётная запись отключена.',
-            ]);
+            ])->redirectTo(route('login'));
         }
 
         RateLimiter::clear($key);

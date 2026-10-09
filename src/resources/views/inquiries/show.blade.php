@@ -26,7 +26,7 @@
             <dt>Источник</dt>
             <dd>{{ $inquiry->source_kind }}</dd>
             <dt>Статус</dt>
-            <dd><span class="badge {{ $inquiry->status->value }}">{{ $inquiry->status->label() }}</span></dd>
+            <dd><livewire:inquiry-status-switch :inquiry="$inquiry" /></dd>
             <dt>Сообщение</dt>
             <dd>{{ $inquiry->message ?: '—' }}</dd>
             <dt>Создано</dt>
@@ -36,26 +36,6 @@
                 <dd>{{ $inquiry->landing_path }}</dd>
             @endif
         </dl>
-    </div>
-
-    <div class="card">
-        <h2>Смена статуса</h2>
-        @if (count($transitions) > 0)
-            <form method="POST" action="{{ route('inquiries.status', $inquiry) }}">
-                @csrf
-                <div class="row">
-                    <select name="status" style="width: auto;">
-                        @foreach ($transitions as $to)
-                            <option value="{{ $to->value }}">{{ $to->label() }}</option>
-                        @endforeach
-                    </select>
-                    <input type="text" name="note" placeholder="Комментарий (необязательно)" style="width: 260px;">
-                    <button type="submit">Применить</button>
-                </div>
-            </form>
-        @else
-            <p class="muted">Обращение в терминальном статусе — переходы недоступны.</p>
-        @endif
     </div>
 
     <div class="card">

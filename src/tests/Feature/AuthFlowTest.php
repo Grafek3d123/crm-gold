@@ -94,6 +94,45 @@ class AuthFlowTest extends TestCase
         $this->actingAs($user)->get('/inquiries/create')->assertOk();
     }
 
+    public function test_login_rate_limiting(): void
+    {
+        User::query()->create([
+            'name' => 'Admin',
+            'email' => 'admin@crm.local',
+            'password' => Hash::make('correct-password'),
+            'role' => 'admin',
+            'is_active' => true,
+        ]);
+
+        // 5 failed attempts should trigger rate limiting
+        for ($i = 0; $i < 5; $i++) {
+            $response = $this->post('/login', [
+                'email' => 'admin@crm.local',
+                'password' => 'wrong-password',
+            ]);
+            $response->assertRedirect('/login');
+            $response->assertSessionHasErrors('email');
+        }
+
+        // 6th attempt should be blocked by rate limiter
+        $response = $this->post('/login', [
+            'email' => 'admin@crm.local',
+            'password' => 'wrong-password',
+        ]);
+        $response->assertRedirect('/login');
+        $response->assertSessionHasErrors('email');
+        $this->assertStringContainsString('Слишком много попыток', session('errors')->first('email'));
+
+        // Correct password should also be blocked while rate limited
+        $response = $this->post('/login', [
+            'email' => 'admin@crm.local',
+            'password' => 'correct-password',
+        ]);
+        $response->assertRedirect('/login');
+        $response->assertSessionHasErrors('email');
+        $this->assertStringContainsString('Слишком много попыток', session('errors')->first('email'));
+    }
+
     public function test_manual_inquiry_registration(): void
     {
         $user = User::query()->create([
