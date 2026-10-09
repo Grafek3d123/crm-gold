@@ -1,0 +1,44 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crm-app
+    working_dir: /var/www/html
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8000:80"
+    depends_on:
+      - postgres
+    networks:
+      - crm
+
+  postgres:
+    image: postgres:16
+    container_name: crm-postgres
+    environment:
+      POSTGRES_DB: crm
+      POSTGRES_USER: crm
+      POSTGRES_PASSWORD: crm
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - crm
+
+  node:
+    image: node:20-alpine
+    container_name: crm-node
+    working_dir: /app
+    volumes:
+      - ./src:/app
+    command: tail -f /dev/null
+    networks:
+      - crm
+
+volumes:
+  pgdata:
+
+networks:
+  crm:
+    driver: bridge
