@@ -43,6 +43,5 @@
 
 @livewireScripts
 @vite('resources/js/app.js')
-<script defer src="{{ asset('vendor/livewire/livewire.js') }}"></script>
 </body>
 </html>
