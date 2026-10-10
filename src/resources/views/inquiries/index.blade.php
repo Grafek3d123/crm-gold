@@ -7,7 +7,7 @@
 
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-xl font-semibold">Обращения</h1>
-        <button wire:click="$dispatch('open-inquiry-create-modal')" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">Зарегистрировать обращение</button>
+        <button onclick="window.Livewire.emit('open-inquiry-create-modal')" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">Зарегистрировать обращение</button>
     </div>
 
     <div class="bg-white border border-gray-200 rounded-xl p-5">
